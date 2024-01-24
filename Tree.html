@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Love You in the Sky</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    .sky {
+      background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .sun {
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at 50% 50%, #fff, transparent);
+      border-radius: 50%;
+      animation: sunSet 10s linear infinite;
+    }
+    @keyframes sunSet {
+      to {
+        transform: translateX(100vw);
+      }
+    }
+    .mountains {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: #8B4513; /* Brown color for mountains */
+      clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+    }
+    .trees {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 40px;
+      height: 100px;
+      background: #228B22; /* Green color for trees */
+      transform: translateX(-50%);
+    }
+    .cloud {
+      position: absolute;
+      top: 15%;
+      left: 10%;
+      width: 200px;
+      height: 80px;
+      background: #fff;
+      border-radius: 50px;
+      animation: cloudMove 15s linear infinite;
+    }
+    @keyframes cloudMove {
+      to {
+        left: 100%;
+      }
+    }
+    .parachute {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      font-size: 24px;
+      color: #FFD700; /* Gold color for parachute */
+      transform: translateX(-50%);
+      animation: parachuteFall 10s ease-out infinite;
+    }
+    @keyframes parachuteFall {
+      0% {
+        top: 40%;
+      }
+      50% {
+        top: 70%;
+      }
+      100% {
+        top: 40%;
+      }
+    }
+    .birds {
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      font-size: 24px;
+      color: #fff;
+      animation: birdsFly 15s linear infinite;
+    }
+    @keyframes birdsFly {
+      to {
+        transform: translateX(100vw);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+    <div class="mountains"></div>
+    <div class="trees"></div>
+    <div class="parachute">I Love You</div>
+    <div class="birds">&#x1F426; &#x1F426; &#x1F426;</div>
+  </div>
+</body>
+</html>
