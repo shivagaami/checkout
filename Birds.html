@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love in the Sky</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    .sky {
+      background: linear-gradient(to bottom, #ff7e5f, #feb47b, #e9d7a5);
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .sun {
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at 50% 50%, #fff, transparent);
+      border-radius: 50%;
+    }
+    .cloud {
+      position: absolute;
+      top: 15%;
+      left: 10%;
+      width: 200px;
+      height: 80px;
+      background: #fff;
+      border-radius: 50px;
+      animation: cloudMove 10s linear infinite;
+    }
+    @keyframes cloudMove {
+      to {
+        left: 100%;
+      }
+    }
+    .plane {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform-origin: 50% 50%;
+      animation: planeMove 5s linear infinite, planeRotate 1s linear infinite;
+    }
+    @keyframes planeMove {
+      to {
+        transform: translateX(100vw);
+      }
+    }
+    @keyframes planeRotate {
+      0%, 50% {
+        transform: translateX(100vw) rotate(0deg);
+      }
+      51%, 100% {
+        transform: translateX(100vw) rotate(180deg);
+      }
+    }
+    .birds {
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      font-size: 24px;
+      color: #fff;
+      animation: birdsFly 15s linear infinite;
+    }
+    @keyframes birdsFly {
+      to {
+        transform: translateX(100vw);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+    <div class="plane">I Love You</div>
+    <div class="birds">&#x1F426; &#x1F426; &#x1F426;</div>
+  </div>
+</body>
+</html>
