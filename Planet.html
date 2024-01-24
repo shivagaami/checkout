@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar System Animation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    .sun {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle at 50% 50%, #ffd700, transparent);
+      border-radius: 50%;
+      animation: rotate 10s linear infinite;
+    }
+    .planet {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #4682b4;
+      animation: orbit 5s linear infinite;
+    }
+    .satellite {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00ff00;
+      animation: orbit 2s linear infinite reverse;
+    }
+    .meteor {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ff4500;
+      animation: meteorFall 3s linear infinite;
+    }
+    .ufo {
+      position: absolute;
+      width: 40px;
+      height: 20px;
+      background: #8a2be2;
+      clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+      animation: ufoMove 8s linear infinite;
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes orbit {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes meteorFall {
+      to {
+        transform: translateY(100vh) rotate(180deg);
+      }
+    }
+
+    @keyframes ufoMove {
+      to {
+        transform: translateX(100vw);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sun"></div>
+  <div class="planet" style="top: 10%; left: 50%;"></div>
+  <div class="planet" style="top: 30%; left: 50%;"></div>
+  <div class="satellite" style="top: 50%; left: 50%;"></div>
+  <div class="meteor" style="top: 70%; left: 30%;"></div>
+  <div class="ufo" style="top: 40%; left: 10%;"></div>
+</body>
+</html>
