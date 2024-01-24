@@ -3,85 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solar System Animation</title>
+  <title>3D Solar System</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
     }
-    .sun {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle at 50% 50%, #ffd700, transparent);
-      border-radius: 50%;
-      animation: rotate 10s linear infinite;
-    }
-    .planet {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #4682b4;
-      animation: orbit 5s linear infinite;
-    }
-    .satellite {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #00ff00;
-      animation: orbit 2s linear infinite reverse;
-    }
-    .meteor {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #ff4500;
-      animation: meteorFall 3s linear infinite;
-    }
-    .ufo {
-      position: absolute;
-      width: 40px;
-      height: 20px;
-      background: #8a2be2;
-      clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
-      animation: ufoMove 8s linear infinite;
-    }
-
-    @keyframes rotate {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes orbit {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes meteorFall {
-      to {
-        transform: translateY(100vh) rotate(180deg);
-      }
-    }
-
-    @keyframes ufoMove {
-      to {
-        transform: translateX(100vw);
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="sun"></div>
-  <div class="planet" style="top: 10%; left: 50%;"></div>
-  <div class="planet" style="top: 30%; left: 50%;"></div>
-  <div class="satellite" style="top: 50%; left: 50%;"></div>
-  <div class="meteor" style="top: 70%; left: 30%;"></div>
-  <div class="ufo" style="top: 40%; left: 10%;"></div>
+  <script>
+    // Import Three.js and create a scene
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
+
+    const scene = new THREE.Scene();
+
+    // Create a camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    // Create a renderer
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Create solar system objects
+    const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
+    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+    scene.add(sun);
+
+    const planets = [];
+    const moon = createMoon();
+    const meteors = createMeteors();
+    const ufo = createUFO();
+
+    function createPlanet(radius, color, distance) {
+      const geometry = new THREE.SphereGeometry(radius, 32, 32);
+      const material = new THREE.MeshBasicMaterial({ color });
+      const planet = new THREE.Mesh(geometry, material);
+      planet.position.x = distance;
+      planets.push(planet);
+      scene.add(planet);
+    }
+
+    function createMoon() {
+      const moonGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+      const moonMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
+      const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+      scene.add(moon);
+      return moon;
+    }
+
+    function createMeteors() {
+      const meteors = [];
+      for (let i = 0; i < 10; i++) {
+        const meteorGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        const meteorMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 });
+        const meteor = new THREE.Mesh(meteorGeometry, meteorMaterial);
+        meteor.position.set(Math.random() * 10 - 5, Math.random() * 2 + 5, Math.random() * 10 - 5);
+        scene.add(meteor);
+        meteors.push(meteor);
+      }
+      return meteors;
+    }
+
+    function createUFO() {
+      const ufoGeometry = new THREE.BoxGeometry(0.5, 0.2, 0.2);
+      const ufoMaterial = new THREE.MeshBasicMaterial({ color: 0x8a2be2 });
+      const ufo = new THREE.Mesh(ufoGeometry, ufoMaterial);
+      scene.add(ufo);
+      return ufo;
+    }
+
+    // Set up animations
+    let rotationSpeed = 0.005;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Rotate sun and planets
+      sun.rotation.y += rotationSpeed;
+
+      planets.forEach((planet, index) => {
+        planet.rotation.y += rotationSpeed * (index + 1);
+      });
+
+      // Orbit moon
+      moon.position.x = planets[1].position.x;
+      moon.position.z = planets[1].position.z;
+      moon.rotation.y += rotationSpeed * 2;
+
+      // Move meteors
+      meteors.forEach((meteor) => {
+        meteor.position.y -= 0.02;
+        if (meteor.position.y < -5) {
+          meteor.position.y = 5;
+        }
+      });
+
+      // Move UFO
+      ufo.position.x = Math.sin(Date.now() * 0.001) * 5;
+      ufo.position.z = Math.cos(Date.now() * 0.001) * 5;
+
+      // Render the scene
+      renderer.render(scene, camera);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(newWidth, newHeight);
+    });
+
+    // Initialize planets
+    createPlanet(0.5, 0x4682b4, 3);
+    createPlanet(1, 0x228B22, 6);
+
+    // Start the animation
+    animate();
+  </script>
 </body>
 </html>
