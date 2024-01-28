@@ -1,130 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Solar System</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-  </style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+   <!-- fontawesome  -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+
+    <title>Earth and Moon Moving Around Sun using HTML and CSS - Coding Torque</title>
 </head>
+
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
-    // Import Three.js and create a scene
-    const scene = new THREE.Scene();
+    <div class="solar-system">
+    <div id="sun"></div>
 
-    // Create a camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+    <div class="orbit mercury-orbit"></div>
+    <div class="mercury-spin">
+        <div id="mercury"></div>
+    </div>
 
-    // Create a renderer
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    <div class="orbit venus-orbit"></div>
+    <div class="venus-spin">
+        <div id="venus"></div>
+    </div>
 
-    // Create solar system objects
-    const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
-    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-    const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-    scene.add(sun);
+    <div class="orbit earth-orbit"></div>
+    <div class="earth-spin">
+        <div class="orbit moon-orbit"></div>
+        <div class="moon-spin">
+            <div id="moon"></div>
+        </div>
 
-    const planets = [];
-    const moon = createMoon();
-    const meteors = createMeteors();
-    const ufo = createUFO();
+        <img id="earth"
+            src="https://raw.githubusercontent.com/everdimension-personal/codepen-assets/master/earth_small_150.jpg" />
+    </div>
 
-    function createPlanet(radius, color, distance) {
-      const geometry = new THREE.SphereGeometry(radius, 32, 32);
-      const material = new THREE.MeshBasicMaterial({ color });
-      const planet = new THREE.Mesh(geometry, material);
-      planet.position.x = distance;
-      planets.push(planet);
-      scene.add(planet);
-    }
-
-    function createMoon() {
-      const moonGeometry = new THREE.SphereGeometry(0.3, 32, 32);
-      const moonMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
-      const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-      scene.add(moon);
-      return moon;
-    }
-
-    function createMeteors() {
-      const meteors = [];
-      for (let i = 0; i < 10; i++) {
-        const meteorGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const meteorMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 });
-        const meteor = new THREE.Mesh(meteorGeometry, meteorMaterial);
-        meteor.position.set(Math.random() * 10 - 5, Math.random() * 2 + 5, Math.random() * 10 - 5);
-        scene.add(meteor);
-        meteors.push(meteor);
-      }
-      return meteors;
-    }
-
-    function createUFO() {
-      const ufoGeometry = new THREE.BoxGeometry(0.5, 0.2, 0.2);
-      const ufoMaterial = new THREE.MeshBasicMaterial({ color: 0x8a2be2 });
-      const ufo = new THREE.Mesh(ufoGeometry, ufoMaterial);
-      scene.add(ufo);
-      return ufo;
-    }
-
-    // Set up animations
-    let rotationSpeed = 0.005;
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      // Rotate sun and planets
-      sun.rotation.y += rotationSpeed;
-
-      planets.forEach((planet, index) => {
-        planet.rotation.y += rotationSpeed * (index + 1);
-      });
-
-      // Orbit moon
-      moon.position.x = planets[1].position.x;
-      moon.position.z = planets[1].position.z;
-      moon.rotation.y += rotationSpeed * 2;
-
-      // Move meteors
-      meteors.forEach((meteor) => {
-        meteor.position.y -= 0.02;
-        if (meteor.position.y < -5) {
-          meteor.position.y = 5;
-        }
-      });
-
-      // Move UFO
-      ufo.position.x = Math.sin(Date.now() * 0.001) * 5;
-      ufo.position.z = Math.cos(Date.now() * 0.001) * 5;
-
-      // Render the scene
-      renderer.render(scene, camera);
-    }
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      const newWidth = window.innerWidth;
-      const newHeight = window.innerHeight;
-
-      camera.aspect = newWidth / newHeight;
-      camera.updateProjectionMatrix();
-
-      renderer.setSize(newWidth, newHeight);
-    });
-
-    // Initialize planets
-    createPlanet(0.5, 0x4682b4, 3);
-    createPlanet(1, 0x228B22, 6);
-
-    // Start the animation
-    animate();
-  </script>
+    <div class="orbit mars-orbit"></div>
+    <div class="mars-spin">
+        <div id="mars"></div>
+    </div>
+</div>
 </body>
+
 </html>
